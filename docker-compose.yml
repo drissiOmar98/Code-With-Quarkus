@@ -1,0 +1,22 @@
+# docker-compose.yml
+# Starts a MySQL database preloaded with the Sakila sample data (a DVD rental
+# store: films, actors, customers, rentals...) used by the Quarkus tutorial.
+
+services:
+  # Name of the service (Compose uses this name internally)
+  sakila:
+    # Image from Docker Hub: MySQL with the Sakila database already loaded
+    image: restsql/mysql-sakila
+
+    # Fixed container name (same as the --name sakila from docker run)
+    container_name: sakila
+
+    ports:
+      # host_port:container_port
+      # Makes MySQL reachable from your PC at localhost:3306,
+      # which is what your Quarkus app connects to
+      - "3306:3306"
+
+    # Restart automatically if the container crashes or Docker Desktop restarts,
+    # unless you stopped it yourself
+    restart: unless-stopped
