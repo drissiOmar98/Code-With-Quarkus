@@ -4,6 +4,7 @@ package org.omar.repository;
 import com.speedment.jpastreamer.application.JPAStreamer;
 import com.speedment.jpastreamer.streamconfiguration.StreamConfiguration;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.persistence.EntityManager;
 import org.omar.model.Film;
 import org.omar.model.Film$;
 
@@ -17,16 +18,17 @@ public class FilmRepository {
     private static final int PAGE_SIZE = 20;
 
     private final JPAStreamer jpaStreamer;
+    private final EntityManager entityManager;
 
-    public FilmRepository(JPAStreamer jpaStreamer) {
+    public FilmRepository(JPAStreamer jpaStreamer, EntityManager entityManager) {
         this.jpaStreamer = jpaStreamer;
+        this.entityManager = entityManager;
     }
 
     public Optional<Film> findById(short filmId) {
-        return jpaStreamer.stream(Film.class)
-                .filter(Film$.id.equal(filmId))
-                .findFirst();
+        return Optional.ofNullable(entityManager.find(Film.class, filmId));
     }
+
 
     public List<Film> findByMinLength(short minLength) {
         return jpaStreamer.stream(Film.class)

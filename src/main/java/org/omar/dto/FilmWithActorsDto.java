@@ -11,7 +11,7 @@ public record FilmWithActorsDto(Short id, String title, Short length, List<Actor
 
     public static FilmWithActorsDto from(Film film) {
         return new FilmWithActorsDto(
-                film.getId(),
+                film.getFilmId(),
                 film.getTitle(),
                 film.getLength(),
                 film.getActors().stream().map(ActorDto::from).toList());

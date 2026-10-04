@@ -14,6 +14,6 @@ public record FilmDto(
         @Schema(example = "0.99") BigDecimal rentalRate) {
 
     public static FilmDto from(Film film) {
-        return new FilmDto(film.getId(), film.getTitle(), film.getLength(), film.getRentalRate());
+        return new FilmDto(film.getFilmId(), film.getTitle(), film.getLength(), film.getRentalRate());
     }
 }

@@ -17,7 +17,7 @@ public class Film {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "film_id", nullable = false)
-    private Short id;
+    private Short filmId;
 
     @Column(name = "title", nullable = false)
     private String title;
@@ -65,12 +65,12 @@ public class Film {
     )
     private List<Actor> actors = new ArrayList<>();
 
-    public Short getId() {
-        return id;
+    public Short getFilmId() {
+        return filmId;
     }
 
-    public void setId(Short id) {
-        this.id = id;
+    public void setFilmId(Short filmId) {
+        this.filmId = filmId;
     }
 
     public String getTitle() {
@@ -156,7 +156,7 @@ public class Film {
     public Film() {}
 
     public Film(short filmId, String title, short length) {
-        this.id = filmId;
+        this.filmId = filmId;
         this.title = title;
         this.length = length;
     }
