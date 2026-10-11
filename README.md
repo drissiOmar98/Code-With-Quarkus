@@ -25,6 +25,7 @@ The project goes beyond a basic tutorial: it uses a layered architecture (resour
 - [Packaging and running the application](#packaging-and-running-the-application)
 - [Creating a native executable](#creating-a-native-executable)
 - [Troubleshooting](#troubleshooting)
+- [Health checks](#health-checks)
 - [Author](#author)
 
 ## Features
@@ -293,6 +294,35 @@ Lookup by id uses `EntityManager.find` instead of a JPAStreamer `equal` filter o
 
 **Port 3306 already in use**
 Change the host port in `docker-compose.yml` (for example `"3307:3306"`) and update the JDBC URL accordingly.
+
+
+## Health checks
+
+Health checks are provided by SmallRye Health (MicroProfile Health).
+
+| Endpoint | Purpose |
+|---|---|
+| `/q/health/live` | **Liveness**: should the application be restarted? (thread deadlock detection) |
+| `/q/health/ready` | **Readiness**: can the application receive traffic? (datasource connection + Sakila catalog loaded) |
+| `/q/health` | All checks combined |
+| `/q/health-ui` | Visual dashboard |
+
+Kubernetes probes:
+
+```yaml
+livenessProbe:
+  httpGet:
+    path: /q/health/live
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 10
+readinessProbe:
+  httpGet:
+    path: /q/health/ready
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 5
+```
 
 ## Author
 
