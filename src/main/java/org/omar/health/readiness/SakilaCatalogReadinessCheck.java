@@ -34,7 +34,7 @@ public class SakilaCatalogReadinessCheck implements HealthCheck {
     }
 
     @Override
-    @Blocking // JDBC call: must not run on the event loop
+    //@Blocking // JDBC call: must not run on the event loop
     public HealthCheckResponse call() {
         HealthCheckResponseBuilder builder = HealthCheckResponse.named(CHECK_NAME);
 
